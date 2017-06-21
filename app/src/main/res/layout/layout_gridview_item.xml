@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
@@ -8,17 +8,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5px"
-        android:textSize="50px" >
+        android:textSize="20dp"
+        android:layout_centerHorizontal="true">
+
     </TextView>
 
     <TextView
         android:id="@+id/currency_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/currency_label"
         android:layout_marginTop="5px"
-        android:textSize="50px" >
+        android:textSize="15dp"
+        android:layout_centerHorizontal="true">
     </TextView>
 
-
-
-</LinearLayout>
+</RelativeLayout>

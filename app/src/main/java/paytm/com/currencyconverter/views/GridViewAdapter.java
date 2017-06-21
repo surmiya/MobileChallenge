@@ -1,12 +1,16 @@
 package paytm.com.currencyconverter.views;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,18 +23,20 @@ import paytm.com.currencyconverter.R;
  * Created by Mac-Retina on 2017-06-18.
  */
 
-public class CurrencyAdapter extends BaseAdapter {
+public class GridViewAdapter extends BaseAdapter {
 
     Context context;
     LayoutInflater inflater;
     Map<String, Double> map;
     final List<String> list;
+    private String amount;
 
-    public CurrencyAdapter(Context context, Map<String, Double> map) {
+    public GridViewAdapter(Context context, Map<String, Double> map, String amount) {
         this.context = context;
         inflater = (LayoutInflater.from(context));
         this.map = map;
         list = new ArrayList<String>(map.keySet());
+        this.amount = amount;
 
     }
 
@@ -58,9 +64,22 @@ public class CurrencyAdapter extends BaseAdapter {
 
         String label = list.get(position);
         labelTextView.setText(label);
-        rateTextView.setText(String.valueOf(map.get(label)));
 
-        view.setClickable(false);
+        double exValue = map.get(label);
+        NumberFormat nf = NumberFormat.getInstance();
+
+        if(!TextUtils.isEmpty(amount)) {
+            try {
+                exValue = nf.parse(amount).doubleValue() * (map.get(label));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        DecimalFormat df = new DecimalFormat("#,##0.000");
+        rateTextView.setText(String.valueOf(df.format(exValue)));
+
+        view.setEnabled(false);
 
         return view;
     }
